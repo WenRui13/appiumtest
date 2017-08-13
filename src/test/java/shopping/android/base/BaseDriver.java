@@ -1,6 +1,7 @@
 package shopping.android.base;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
@@ -48,11 +49,16 @@ public class BaseDriver {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
         capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
+
+        capabilities.setCapability("appium-version","1.4.13.1");
         setDeviceCaps(capabilities, currentPhone, deviceDetail.get(currentPhone));
 
 
-//        setAppPackageActivity(capabilities, "com.jingdong.app.mall", "com.jingdong.app.mall.MainFrameActivity");
-        setAppPackageActivity(capabilities, "com.liulishuo.engzo", ".app.activity.LauncherActivity");
+        setAppPackageActivity(capabilities, "com.jingdong.app.mall", ".main.MainActivity");
+//        setAppPackageActivity(capabilities, "com.jingdong.app.mall", ".MainFrameActivity");
+//        capabilities.setCapability("android-exported","true");
+//        capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY,".MainFrameActivity");
+//        setAppPackageActivity(capabilities, "com.liulishuo.engzo", ".app.activity.LauncherActivity");
 //        setAppPackageActivity(capabilities, "com.yulong.android.coolman", "com.yulong.android.coolman.NaviActivity");
 //        setAppPackageActivity(capabilities, "com.netease.edu.study", ".login.activity.ActivityLogin");
 //        setAppPackageActivity(capabilities, "com.android.calculator2", ".Calculator");
@@ -78,5 +84,13 @@ public class BaseDriver {
     private void setAppPackageActivity(DesiredCapabilities capabilities, String appPackage, String appActivity) {
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appPackage);
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
+    }
+
+    public void swipeToUp(AppiumDriver<AndroidElement> dr, int mills) {
+        int width = dr.manage().window().getSize().width;
+        int height = dr.manage().window().getSize().height;
+//        new TouchAction(driver).press(width / 2, height * 3 / 4).moveTo(width / 2, height / 4).release().perform();
+
+        dr.swipe(width/2, height*3/4, width/2, height/4, mills);
     }
 }
