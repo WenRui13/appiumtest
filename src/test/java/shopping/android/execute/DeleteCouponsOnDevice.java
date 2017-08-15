@@ -1,7 +1,6 @@
 package shopping.android.execute;
 
 import io.appium.java_client.android.AndroidElement;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -10,7 +9,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import shopping.android.base.BaseDriver;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
