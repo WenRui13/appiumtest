@@ -66,6 +66,16 @@ public class DeleteCouponsOnDevice extends BaseDriver {
         Assert.assertTrue(driver.findElementByAccessibilityId("账户管理").isDisplayed());
     }
 
+
+    @Test
+    public void testStartActivity() throws Exception {
+        login("追求完美的猫");
+//        org.openqa.selenium.WebDriverException: Unable to launch the app: Error: Permission to start activity denied.
+        driver.startActivity(driver.getCapabilities().getCapability("appPackage").toString(),"com.jd.lib.mycoupon.mvp.view.activity.CouponActivity");
+
+
+    }
+
     public void login(String qq) throws Exception {
         Assert.assertTrue(driver.findElementByAccessibilityId("我的").isDisplayed());
         driver.findElementByAccessibilityId("我的").click();
