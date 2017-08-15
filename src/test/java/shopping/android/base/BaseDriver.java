@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @ReviewDate 2017/8/10
  */
 public class BaseDriver {
-    protected AppiumDriver<AndroidElement> driver;
+    protected AndroidDriver<AndroidElement> driver;
 
     private static final String configFilePath = "src/test/resources/config.ini";
     private static final String COOLPAD = "Coolpad";
@@ -33,7 +33,7 @@ public class BaseDriver {
 
     static {
         sConfig = new Properties();
-        deviceDetail = new HashMap<String, String[]>();
+        deviceDetail = new HashMap<>();
         deviceDetail.put(COOLPAD, new String[]{"9323779f", "4.2.2"});
         deviceDetail.put(MATE8, new String[]{"5LM0216117013394", "7.0"});
     }
@@ -49,24 +49,17 @@ public class BaseDriver {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
+//        capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
 
-        capabilities.setCapability("appium-version","1.4.13.1");
         capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD,"true");
         setDeviceCaps(capabilities, currentPhone, deviceDetail.get(currentPhone));
 
 
         setAppPackageActivity(capabilities, "com.jingdong.app.mall", ".main.MainActivity");
-//        setAppPackageActivity(capabilities, "com.jingdong.app.mall", ".MainFrameActivity");
-//        capabilities.setCapability("android-exported","true");
-//        capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY,".MainFrameActivity");
-//        setAppPackageActivity(capabilities, "com.liulishuo.engzo", ".app.activity.LauncherActivity");
-//        setAppPackageActivity(capabilities, "com.yulong.android.coolman", "com.yulong.android.coolman.NaviActivity");
-//        setAppPackageActivity(capabilities, "com.netease.edu.study", ".login.activity.ActivityLogin");
 //        setAppPackageActivity(capabilities, "com.android.calculator2", ".Calculator");
 //        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "5");
 
-        driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -91,8 +84,6 @@ public class BaseDriver {
     protected void swipeToUp(AppiumDriver<AndroidElement> dr, int mills) throws WebDriverException{
         int width = dr.manage().window().getSize().width;
         int height = dr.manage().window().getSize().height;
-//        new TouchAction(driver).press(width / 2, height * 3 / 4).moveTo(width / 2, height / 4).release().perform();
-
         dr.swipe(width/2, height*4/5, width/2, height/5, mills);
     }
 }
