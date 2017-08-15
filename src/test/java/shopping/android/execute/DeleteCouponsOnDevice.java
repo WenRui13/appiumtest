@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidElement;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -30,14 +31,22 @@ public class DeleteCouponsOnDevice extends BaseDriver {
     public void testLoopDeleteCoupons() throws Exception {
         driver.findElementByName("优惠券").click();
         List<AndroidElement> list = driver.findElementsByClassName("android.widget.TextView");
-        while (!list.get(1).getText().contains("批量删除(0)")) {
+        System.out.println(list.get(1).getText());
+        while (!list.get(1).getText().contains("未使用 (0)")) {
             driver.findElementsByClassName("android.widget.ImageView").get(1).click();
             driver.findElementByName("批量删除").click();
             driver.findElementByName("全选").click();
 
-            while (!list.get(list.size() - 1).getText().contains("批量删除(20)")) {
-                swipeToUp(driver, 1000);
-                list = driver.findElementsByClassName("android.widget.TextView");
+            while (!list.get(list.size() - 1).getText().contains("批量删除(90)")) {
+                try {
+                    swipeToUp(driver, 300);
+                } catch (WebDriverException e) {
+                    break;
+                } finally {
+                    list = driver.findElementsByClassName("android.widget.TextView");
+                }
+//                Thread.sleep(1000);
+//                list = driver.findElementsByClassName("android.widget.TextView");
             }
             list.get(list.size() - 1).click();
             driver.findElementsByClassName("android.widget.Button").get(1).click();
@@ -65,17 +74,19 @@ public class DeleteCouponsOnDevice extends BaseDriver {
         }
         driver.findElementByName("登录/注册").click();
 
-//        driver.findElementsByClassName("android.widget.EditText").get(0).clear();
-//        driver.findElementsByClassName("android.widget.EditText").get(0).sendKeys("追求完美的猫");
-//        driver.findElementsByClassName("android.widget.EditText").get(1).clear();
-//        driver.findElementsByClassName("android.widget.EditText").get(1).sendKeys("xzh123");
+        driver.findElementsByClassName("android.widget.EditText").get(0).click();
+        driver.findElementByClassName("android.widget.ImageView").click();
 
-//        driver.findElementByName("登录").click();
+        driver.findElementsByClassName("android.widget.EditText").get(0).sendKeys("追求完美的猫");
+        driver.findElementsByClassName("android.widget.EditText").get(1).clear();
+        driver.findElementsByClassName("android.widget.EditText").get(1).sendKeys("xzh123");
 
-        driver.findElementByName("QQ登录").click();
-
-        Assert.assertTrue(driver.findElementByName("（2447029216）").isDisplayed());
         driver.findElementByName("登录").click();
+
+//        driver.findElementByName("QQ登录").click();
+//
+//        Assert.assertTrue(driver.findElementByName("（2447029216）").isDisplayed());
+//        driver.findElementByName("登录").click();
 
     }
 }

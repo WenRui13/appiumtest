@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeTest;
 
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @ReviewDate 2017/8/10
  */
 public class BaseDriver {
-    public AppiumDriver<AndroidElement> driver;
+    protected AppiumDriver<AndroidElement> driver;
 
     private static final String configFilePath = "src/test/resources/config.ini";
     private static final String COOLPAD = "Coolpad";
@@ -51,6 +52,7 @@ public class BaseDriver {
         capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
 
         capabilities.setCapability("appium-version","1.4.13.1");
+        capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD,"true");
         setDeviceCaps(capabilities, currentPhone, deviceDetail.get(currentPhone));
 
 
@@ -86,11 +88,11 @@ public class BaseDriver {
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
     }
 
-    public void swipeToUp(AppiumDriver<AndroidElement> dr, int mills) {
+    protected void swipeToUp(AppiumDriver<AndroidElement> dr, int mills) throws WebDriverException{
         int width = dr.manage().window().getSize().width;
         int height = dr.manage().window().getSize().height;
 //        new TouchAction(driver).press(width / 2, height * 3 / 4).moveTo(width / 2, height / 4).release().perform();
 
-        dr.swipe(width/2, height*3/4, width/2, height/4, mills);
+        dr.swipe(width/2, height*4/5, width/2, height/5, mills);
     }
 }
