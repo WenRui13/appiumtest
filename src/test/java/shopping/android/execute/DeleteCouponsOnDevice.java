@@ -1,6 +1,7 @@
 package shopping.android.execute;
 
 import io.appium.java_client.android.AndroidElement;
+import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -22,12 +23,12 @@ public class DeleteCouponsOnDevice extends BaseDriver {
     @DataProvider(name = "qq")
     public static Object[][] qq() {
         return new Object[][]{
+                {"872954518"},
                 {"2491841795"},
+                {"454803299"},
                 {"1795942062"},
                 {"3454608466"},
                 {"2447029216"},
-                {"454803299"},
-                {"872954518"},
                 {"追求完美的猫"},
         };
     }
@@ -35,6 +36,7 @@ public class DeleteCouponsOnDevice extends BaseDriver {
     @Test(dataProvider = "qq")
     public void testLoopDeleteCoupons(String qq) throws Exception {
         login(qq);
+        Assert.assertTrue(driver.findElementByAccessibilityId("账户管理").isDisplayed());
         String couponRecord = driver.findElementByXPath(".//*[@text='优惠券']/preceding-sibling::*").getText();
         if (Integer.valueOf(couponRecord) == 0) {
             System.out.println("优惠券数量为0，无须删除！");
@@ -48,14 +50,27 @@ public class DeleteCouponsOnDevice extends BaseDriver {
             driver.findElementByName("批量删除").click();
             driver.findElementByName("全选").click();
 
-            while (!list.get(list.size() - 1).getText().contains("批量删除(90+)")) {
+            while (!list.get(list.size() - 1).getText().contains("+")) {
+
+//                by swipe
+//                try {
+//                    swipeToUp(driver, 200);
+//                } catch (WebDriverException e) {
+//                    break;
+//                } finally {
+//                    list = driver.findElementsByClassName("android.widget.TextView");
+//                }
+
+
+//                by android.support.test.uiautomator.UiScrollable.flingForward ()
                 try {
-                    swipeToUp(driver, 200);
+                    driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).flingForward();");
                 } catch (WebDriverException e) {
                     break;
                 } finally {
                     list = driver.findElementsByClassName("android.widget.TextView");
                 }
+
             }
             list.get(list.size() - 1).click();
             driver.findElementsByClassName("android.widget.Button").get(1).click();
