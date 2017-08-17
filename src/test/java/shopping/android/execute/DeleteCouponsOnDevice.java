@@ -1,7 +1,6 @@
 package shopping.android.execute;
 
 import io.appium.java_client.android.AndroidElement;
-import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -24,12 +23,12 @@ public class DeleteCouponsOnDevice extends BaseDriver {
     public static Object[][] qq() {
         return new Object[][]{
                 {"872954518"},
+                {"追求完美的猫"},
                 {"2491841795"},
                 {"454803299"},
                 {"1795942062"},
                 {"3454608466"},
                 {"2447029216"},
-                {"追求完美的猫"},
         };
     }
 
