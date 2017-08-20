@@ -52,6 +52,7 @@ public class BaseDriver {
 //        capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
 
         capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD,"true");
+        capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD,"true");
         setDeviceCaps(capabilities, currentPhone, deviceDetail.get(currentPhone));
 
 
