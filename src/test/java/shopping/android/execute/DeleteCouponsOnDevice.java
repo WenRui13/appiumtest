@@ -42,6 +42,7 @@ public class DeleteCouponsOnDevice extends BaseDriver {
             System.out.println("优惠券数量为0，无须删除！");
             return;
         }
+        System.out.println("优惠券数量为" + couponRecord);
         driver.findElementByName("优惠券").click();
         List<AndroidElement> list = driver.findElementsByClassName("android.widget.TextView");
         System.out.println(list.get(1).getText());
@@ -86,7 +87,7 @@ public class DeleteCouponsOnDevice extends BaseDriver {
     public void testStartActivity() throws Exception {
         login("追求完美的猫");
 //        org.openqa.selenium.WebDriverException: Unable to launch the app: Error: Permission to start activity denied.
-        driver.startActivity(driver.getCapabilities().getCapability("appPackage").toString(),"com.jd.lib.mycoupon.mvp.view.activity.CouponActivity");
+        driver.startActivity(driver.getCapabilities().getCapability("appPackage").toString(), "com.jd.lib.mycoupon.mvp.view.activity.CouponActivity");
 
 
     }
